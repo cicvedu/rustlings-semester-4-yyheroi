@@ -12,7 +12,6 @@
 //
 // Execute `rustlings hint cow1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use std::borrow::Cow;
 
@@ -48,7 +47,9 @@ mod tests {
         let slice = [0, 1, 2];
         let mut input = Cow::from(&slice[..]);
         match abs_all(&mut input) {
-            // TODO
+            // Cow::Borrowed(_) => 
+            Cow::Borrowed(_) => Ok(()),
+            _ => Err("Expected owned value"),
         }
     }
 
@@ -61,6 +62,8 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            Cow::Owned(_) => Ok(()),
+            _ => Err("Expected owned value"),
         }
     }
 
@@ -73,6 +76,16 @@ mod tests {
         let mut input = Cow::from(slice);
         match abs_all(&mut input) {
             // TODO
+            Cow::Owned(_) => Ok(()),
+            _ => Err("Expected owned value"),
         }
     }
 }
+
+/*
+*Cow::Borrowed 表示 Cow 正在借用外部数据。在这种情况下，Cow 内部持有对原始数据的引用（&T），这意味着它没有数据的所有权
+*Cow::Owned 则表示 Cow 持有数据的所有权。这意味着 Cow 包含一个完整的数据副本（T），可以自由地对其进行修改或操纵，而不必担心外部引用的存在
+*
+*Cow::Borrowed: 提供对现有数据的不可变引用，避免了数据的克隆
+*Cow::Owned: 持有数据的所有权，允许数据的修改和独立于原始数据的生命周期
+*/
