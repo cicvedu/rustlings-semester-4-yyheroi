@@ -40,10 +40,28 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
+
+/*
+split
+在此字符串切片的子字符串上进行迭代的迭代器，该子字符串由模式匹配的字符分隔。
+模式 可以是 &str，char，char 的切片，也可以是确定字符是否匹配的函数或闭包。
+*/
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        let (name,age): (&str, &str) = match s.split(',').collect::<Vec<&str>>()[..] {
+            [name, age] => (name,age),
+            _ => return Default::default(),
+        };
+        if let Ok(ager) = age.parse::<usize>() {
+            if !name.is_empty() {
+                return Person {
+                    name: name.to_string(),
+                    age: ager,
+                };
+            }
+        };
+        Default::default()
     }
 }
 
